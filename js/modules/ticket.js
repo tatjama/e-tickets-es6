@@ -1,4 +1,4 @@
-class Ticket{
+export class Ticket{
     constructor(id, title, author, type, date, scene, quantity, image, price){
         this.id = id;
         this.title = title;
