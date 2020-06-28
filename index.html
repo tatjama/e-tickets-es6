@@ -1,0 +1,607 @@
+<!DOCTYPE html>
+<html lang="sr">
+    <head>
+        <meta charset="utf-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="author" content="Tatjana Markovic, tanja120a@gmail.com">
+        <meta name="description" content="Responsive Shopping card made by using technique 
+        Vanilla JavaScript, HTML, CSS, Sass, jQuery, session storage and local storage. 
+        If you want to try shopping card go to E-shop.
+        Role: 1. Admin - Sign In - username: admin@admin.com, password: admin,
+        Admin have possibility to sell tickets for performances and to make entry for new performances.
+        2. User: If you want to Sing In E-shop , you have tu Sign Up or use default values 
+        - Sign In - username: user@user.com, password: user. User only have possibility to by tickets for 
+        performances.">
+        <meta name="copyright" content="Tatjana Markovic" >
+        <meta name="owner" content="Tatjana Markovic">
+        <meta name="url" content="https://www.tatjama.github.io/e-ticket">
+        <meta name="subject" content="Shopping card for performances, ballet, opera, drama and orchestra"/>
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>E-ticket | Home </title>
+        
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+        <link rel="stylesheet" type="text/css" media="screen" href="style/main.css" />
+        <link rel="stylesheet" type="text/css" media="screen" href="style/index.css"/>
+        <link rel="stylesheet" type="text/css" media="screen" href="style/navigation.css"/>
+        <link rel="stylesheet" type="text/css" media="screen" href="style/footer.css"/>
+        <link rel="icon" href="images/drama6.jpg" type="image/jpg">        
+    </head>
+    <body onload="language()">
+     
+        <div  class="container">  
+          <!--REGISTRACIJA POP-UP FORMA-->
+
+        <div class="popUp_form" id="my_signUp">         
+          <form id="pickUp_signUp">
+            
+              <img onclick="hideSignUpForm()" class="hide-form"  src="./images/icon-close.svg">
+              
+              <fieldset>
+                  <legend class="lang" key="signUpLegend">SIGN UP</legend>
+                  <br>
+                  <span class="lang" key="formName">Name:</span>
+                  <span  class="error_signUp langTitle" key="error name" title="Error. Type valid name..."></span>
+                  <input class="langAt" key="name" type="text" placeholder=" Type name" id="signUp_name" onblur="validR('signUp_name', 0)" onfocus="fillingInputSignUp(0)" required>
+                  <br><span class="lang" key="formSurname"> Surname:</span>
+                  <span class="error_signUp langTitle" key="error surname" title="Error. Type valid surname..."></span>
+                  <input class="langAt" key="surname" type="text" placeholder=" Type surname" id="signUp_surname" onblur="validR('signUp_surname', 1)" onfocus="fillingInputSignUp(1)" required>                  <br>E-mail:
+                  <span class="error_signUp langTitle" key="error email" title="Error. Type valid E-mail..."></span>
+                  <input type="email" placeholder=" E-mail" id="signUp_email" onblur="validMailR('signUp_email', 2)" onfocus="fillingInputSignUp(2)" required>
+                  <br><span class="lang" key="formPassword"> Password:</span> 
+                  <span class="error_signUp langTitle" key="error password" title="Error. Type valid password..."></span>
+                  <input class="langAt" key="password" type="password" placeholder="Password" id="signUp_password" name="bday" onblur="valid1R('signUp_password', 3)" onfocus="fillingInputSignUp(3)" required>
+                  <br> Status:
+                  <input type="number" placeholder=" administrator" id="signUp_status" readonly value="1">
+                  <br>
+                  <input class="langVal" key="register" type="button" onclick="signUp()" value="Sign Up">
+                  <input class="langVal" key = "clear" type="button" onclick="clearInputSignUp()" value="Clear">                  
+              </fieldset>
+          </form>
+        </div>
+
+          <!--LOGOVANJE POP-UP FORMA-->
+        <div class="popUp_form" id="my_signIn">
+          <form id="pickUp_signIn">
+            
+              <img onclick="hideLoginForm()" class="hide-form" src="./images/icon-close.svg">
+            
+              <fieldset>
+                  <legend class="lang" key="signInLegend">SIGN IN</legend>
+                  <br>E-mail:<br>
+                  <span class="error langTitle" key="error email" id="error1" title="Error. Type valid E-mail..."></span>
+                  <input type="email" placeholder=" E-mail" id="logIn_email" onblur="validMail('logIn_email', 0)" onfocus="fillingInput(0)" required>
+                  <br><span class="lang" key="formPassword"> Password:</span><br>
+                  <span class="error langTitle" key="error password" id="error2" title="Error. Type valid password..."></span>
+                  <input class="langAt" key="password" type="password" id="logIn_password" placeholder=" Password" onblur="valid1('logIn_password', 1)" onfocus="fillingInput(1)" required><br>
+                  <br>
+                  <input class="langVal" key = "signIn" type="button" onclick="signIn()" value="Sign In">
+                  <input class="langVal" key = "clear" type="button" onclick="clearInput()" value="Clear">
+              </fieldset>
+          </form>
+        </div>
+
+            <!---NAVIGATION-->
+            <nav class="flex-row">
+                  <div id="logo">
+                    <img class="nav-img-logo" src="./images/drama6.jpg">
+                  </div>                  
+                  <div class="nav-menu">
+                    <a class="lang" key="aboutUs" href="#aboutus">About us</a>    
+                    <a class="lang" key="terms" href="#terms">Terms</a>
+                    <a class="lang" key="customer" href="#customer-service">Customer service</a>                   
+                  </div>      
+                  <div class="nav-bg" id="start">                 
+                    <a onclick="setLocalStorage('start', 'signing', 'signIn', 'signUp')" href="#">E-shop <i class="fa fa-opencart" ></i> </a>
+                  </div>     
+                  <div class="nav-bg" id="signing">
+                      <a id="eshop" href="./view/eshop.html">E-shop <i class="fa fa-opencart" ></i> </a>  
+                      <a class="lang" key="entry" id="entry" href="view/entry.html">Entry</a>
+                      <a class="lang" key="sale" id="sale" href="view/sale.html">Sale</a>                 
+                      <a id="signUp" href="#" onclick="showSignUpForm()">Sign Up</a>
+                      <a id="signIn" href="#" onclick="showLoginForm()">Sign In</a> 
+                      <a id="signOut" href="#" onclick="signOut('signUp','signIn', 'eshop', 'entry', 'sale', 'signOut' )">Sign Out</a> 
+                  </div>                  
+                  <div onclick="openMenu()" class="nav-hamburger"  >
+                      <svg xmlns="http://www.w3.org/2000/svg" width="25" height="18"><g fill="honeydew" fill-rule="evenodd"><path d="M0 0h25v4H0zM0 7h25v4H0zM0 14h25v4H0z"/></g></svg>
+                  </div>
+                  <div class="nav-bg-menu">
+                    <div onclick="closeMenu()" class="nav-close">
+                      <img src="./images/icon-close.svg">
+                    </div>
+                    <a class="lang" key="aboutUs" href="#aboutus" onclick="closeMenu()">About us</a>    
+                    <a class="lang" key = "terms"  href="#terms" onclick="closeMenu()">Terms</a>
+                    <a class="lang" key="customer" href="#customer-service" onclick="closeMenu()">Customer service</a>                                    
+                    <a id="start_mobile" onclick="setLocalStorage('start_mobile', 'signing_mobile', 'signIn_mobile', 'signUp_mobile')" href="#">E-shop <i class="fa fa-opencart" ></i> </a>
+                    <div id="signing_mobile">
+                      <a id="eshop_mobile" href="./view/eshop.html">E-shop <i class="fa fa-opencart" ></i> </a>
+                      <a class="lang" key="entry" id="entry_mobile" href="view/entry.html">Entry</a>
+                      <a class="lang" key="sale" id="sale_mobile" href="view/sale.html">Sale</a>
+                      <a id="signUp_mobile" href="#" onclick="showSignUpForm()">Sign Up</a>
+                      <a id="signIn_mobile" href="#" onclick="showLoginForm()">Sign In</a> 
+                      <a id="signOut_mobile" href="#" onclick="signOut('signUp_mobile','signIn_mobile', 'eshop_mobile', 'entry_mobile', 'sale_mobile', 'signOut_mobile' )">Sign Out</a> 
+                    </div>                  
+                  </div>
+            </nav>   
+            <section class="choose-language" >
+               <!----Choose language-->
+      <span href="#" class="translate" id="en" onclick="translateL('en')">en</span>
+      <span href="#" class="translate" id="sr" onclick="translateL('sr')">sr</span>
+            </section>
+            <section class="section_one">
+                <figure>
+                    <a href="#section_three_h1">
+                        <img src="images/webp/pozoriste1.webp" alt="pozoriste velika sala">
+                        <figcaption class="lang" key="premiere">Premiere</figcaption>
+                    </a>
+                </figure>
+                <figure>
+                    <a href="#">
+                        <img src="images/webp/filharmonija7.webp" alt="violina i notna sveska">
+                        <figcaption>Program</figcaption>
+                    </a>
+                </figure>
+                <figure>
+                  <a href="#location">
+                    <img src="images/webp/beograd3.webp" alt="beograd">                  
+                    <figcaption class="lang" key="contact">Contact</figcaption>
+                  </a>
+                </figure>
+            </section>
+            <section class="section_two">
+                <div class="content">
+                    <h1 class="lang" key="aboutUs" id="aboutus">About us</h1>
+                    <p >
+                      <hr/>
+                      <span class="lang" key="aboutUsContent">
+                        Our opinion is that satisfied customer is the best marketing ...
+                        Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor 
+                        incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud 
+                        exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. </span>
+                    </p>
+                </div>
+                <div class="content">
+                    <h1 class="lang" key="terms"  id="terms">Terms</h1>
+                    
+                    <p>
+                      <hr/>
+                      <span class="lang" key="termsContent">
+                        Quick, easy and safe purchase of tickets for theater, ballet, opera or philharmonic concerts. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. 
+                      </span>
+                    </p>
+                </div>
+                <div class="content">
+                    <h1 class="lang" key="customerReturn"  id="customer_service">Tickets replacement</h1>
+                   
+                    <p>
+                     <hr/>
+                     <span class="lang" key="customerReturnContent">
+                      customerReturnContent' : 'We all sometimes find ourselves in an unplanned situation when our only option is to return the purchased ticket. These are the conditions for a refund...  Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore 
+                        veritatis
+                      </span>
+                      <span class="show-more lang" key="show-more" onclick="showMore()">
+                      show more...
+                      </span>
+                        <span class="hide-text">
+                          et quasi architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas 
+                          t aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt. Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit, 
+                          sed quia non numquam eius modi tempora incidunt ut labore et dolore magnam aliquam quaerat voluptatem. 
+                          Ut enim ad minima veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam, nisi ut aliquid ex ea commodi consequatur? 
+                          Quis autem vel eum iure reprehenderit qui in ea voluptate velit esse quam nihil molestiae consequatur, vel illum qui dolorem eum fugiat quo voluptas nulla pariatur?
+                      </span>
+                      <span class="show-less lang" key="show-less" onclick="showLess()">
+                        ...show less
+                      </span> 
+                    </p>
+                           
+                </div>
+            </section>
+            <section class="section_three">
+              <h1 class="lang" key="premiere-h1" id="section_three_h1">PREMIERE</h1>
+              
+              <div id="parallax_image_one" class="parallax"> 
+                <div class="description">
+                  <div class="premiere">
+                  
+                   <img  alt="balet1" src="./images/webp/balerina1.webp">
+                  
+                  <div class="parallax- text"> 
+                    <a href="./view/eshop.html">
+                    <h4 class="lang" key = "swan">SWAN LAKE</h4> </a>
+                  <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus tristique diam in tempor condimentum. Proin condimentum a purus non malesuada. Nulla et dignissim libero, a accumsan enim. Quisque at auctor dolor. Praesent vitae neque iaculis,
+                      molestie sapien quis, pretium est. Sed vehicula                      
+                    </p>
+                    <h5> <span class="lang" key="date"> DATE: </span> 10.10.2020</h5>
+                      <h5><span class="lang" key = "time">TIME: </span> 20:00h</h5>
+                      <h5><span class="lang" key = 'scene'>SCENE: </span>  Velika scena</h5>
+                    </div>
+                       
+                  </div> 
+                  <div class="premiere">          
+                  <img  alt="balet2" src="./images/webp/balerina2.webp">
+                  <div class="parallax- text"> 
+                    <a href="./view/eshop.html">
+                    <h4 class="lang" key = "eugene">EUGENE ONEGIN</h4> 
+                  </a>
+                  <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus tristique diam in tempor condimentum. Proin condimentum a purus non malesuada. Nulla et dignissim libero, a accumsan enim. Quisque at auctor dolor. Praesent vitae neque iaculis,
+                      molestie sapien quis, pretium est. Sed vehicula                      
+                    </p>
+                    <h5> <span class="lang" key="date"> DATE: </span> 10.10.2020</h5>
+                      <h5><span class="lang" key = "time">TIME: </span> 20:00h</h5>
+                      <h5><span class="lang" key = 'scene'>SCENE: </span>  Velika scena</h5>
+                    </div>   
+                   </div>
+                </div>
+                <div class="description">
+                  <div class="premiere">
+                  <img  alt="drama 3" src="./images/webp/drama3.webp">
+                  <div class="parallax- text">
+                  <a href="./view/eshop.html">
+                    <h4 class="lang" key = "lady">THE LADY OF THE CAMELLIAS</h4> 
+                  </a>
+                  <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus tristique diam in tempor condimentum. Proin condimentum a purus non malesuada. Nulla et dignissim libero, a accumsan enim. Quisque at auctor dolor. Praesent vitae neque iaculis,
+                      molestie sapien quis, pretium est. Sed vehicula                      
+                    </p>
+                    <h5><span class="lang" key="date"> DATE: </span> 10.10.2020</h5>
+                      <h5 ><span class="lang" key = "time">TIME: </span> 20:00h</h5>
+                      <h5><span class="lang" key = 'scene'>SCENE: </span> Velika scena</h5>
+                    </div>
+                  </div>
+                  <div class="premiere">
+                  <img   alt="drama 2" src="./images/webp/drama5.webp">
+                  <div class="parallax- text"> 
+                  <a href="./view/eshop.html">  
+                    <h4>RADOVAN III</h4> 
+                  </a>
+                  <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus tristique diam in tempor condimentum. Proin condimentum a purus non malesuada. Nulla et dignissim libero, a accumsan enim. Quisque at auctor dolor. Praesent vitae neque iaculis,
+                      molestie sapien quis, pretium est. Sed vehicula                      
+                    </p>
+                    <h5> <span class="lang" key="date"> DATE: </span> 10.10.2020</h5>
+                      <h5><span class="lang" key = "time">TIME: </span> 20:00h</h5>
+                      <h5><span class="lang" key = 'scene'>SCENE: </span>  Velika scena</h5>
+                    </div>
+                  </div>
+                </div>     
+                <div class="description">       
+                  <div class="premiere">        
+                  <img  alt="opera 1" src="./images/webp/filharmonija1.webp">
+                  <div class="parallax- text"> 
+                  <a href="./view/eshop.html">
+                    <h4>AIDA</h4> 
+                  </a>
+                  <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus tristique diam in tempor condimentum. Proin condimentum a purus non malesuada. Nulla et dignissim libero, a accumsan enim. Quisque at auctor dolor. Praesent vitae neque iaculis,
+                      molestie sapien quis, pretium est. Sed vehicula                      
+                    </p>
+                    <h5> <span class="lang" key="date"> DATE: </span>10.10.2020</h5>
+                      <h5><span class="lang" key = "time">TIME: </span> 20:00h</h5>
+                      <h5><span class="lang" key = 'scene'>SCENE: </span>  Velika scena</h5>
+                    </div>      
+                </div>
+                <div class="premiere">          
+                  <img  alt="opera 2" src="./images/webp/opera2.webp">
+                  <div class="parallax- text"> 
+                  <a href="./view/eshop.html">
+                    <h4>BOLERO</h4> 
+                  </a>
+                  <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus tristique diam in tempor condimentum. Proin condimentum a purus non malesuada. Nulla et dignissim libero, a accumsan enim. Quisque at auctor dolor. Praesent vitae neque iaculis,
+                      molestie sapien quis, pretium est. Sed vehicula                      
+                    </p>
+                    <h5><span class="lang" key="date"> DATE: </span>10.10.2020</h5>
+                      <h5><span class="lang" key = "time">TIME: </span> 20:00h</h5>
+                      <h5><span class="lang" key = 'scene'>SCENE: </span> Velika scena</h5>
+                    </div>
+                </div>
+                </div>            
+              </div>       
+                     
+              <div class="popuna"></div>      
+            </section>
+            <section>
+              <div class="section_four">
+                <div>
+                  <h2 class="lang" key="they said">
+                What they’ve said</h2>
+                </div>      
+                <div class="slider">        
+                  <div class="slide">
+                  <img src="./images/webp/avatar-marko.webp">
+                  <h3>Marko</h3>
+                  <p class="lang" key="marko">"Simple ticket purchase is why I always use this service. High 
+                    security when paying is another plus."
+                    <!--“Manage has supercharged our team’s workflow. The ability to maintain 
+                  visibility on larger milestones at all times keeps everyone motivated.”-->
+                  </p>
+                  </div>
+                  <div class="slide">
+                   <img src="./images/webp/avatar-jelena.webp">
+                  <h3>Jelena</h3>
+                  <p class="lang" key="jelena">" I had to cancel tickets for one show. The procedure was very 
+                    simple, and the money was returned to me in record time. I will for sure re-use the e-ticket."
+                    
+                   <!--“We have been able to cancel so many other subscriptions since using 
+                    Manage. There is no more cross-channel confusion and everyone is much 
+                    more focused.”-->        
+                  </p>
+                  </div>
+                  <div class="slide">
+                    <img src="./images/webp/avatar-stefan.webp"/>          
+                  <h3>Stefan</h3>
+                  <p class="lang" key="stefan">"I visit this site regularly, because I always get new information 
+                    related to premieres. Clarity and ease of use are paramount to me. "
+                    
+                    <!--“Manage allows us to provide structure and process. It keeps us organized 
+                    and focused. I can’t stop recommending them to everyone I talk to!”-->
+                  </p>
+                  </div>
+                  <div class="slide">
+                   <img src="./images/webp/avatar-luka.webp">
+                  <h3>Luka</h3>
+                  <p class="lang" key="luka"> "Always friendly and efficient customer service. Possibility of 
+                    contact by e-mail or telephone, and tickets arrive electronically. "
+                             
+                   <!-- “Their software allows us to track, manage and collaborate on our projects 
+                    from anywhere. It keeps the whole team in-sync without being intrusive.”--->
+                  </p>
+                  </div>
+                  
+          
+                </div>
+                <div class="slider-dots">
+                  <span class="dot" onclick="currentSlide(-1)"></span>
+                  <span class="dot active"  onclick="currentSlide(0)"></span>
+                  <span class="dot" onclick="currentSlide(1)"></span>
+                  <span class="dot" onclick="currentSlide(2)"></span>
+                </div>
+                
+                <div>
+                  <button class="lang" key="sent" id="open-comment-form" onclick="openCommentForm()">
+                    Send a comment</button>
+                </div>
+              </div>
+              <div class="comment-form">
+                <img onclick="hideCommentForm()" class="hide-form" src="./images/icon-close.svg">
+                <!--<form action="./php/comment-form-proccesor.php" method="post" target="_blank" name="myemailform">
+                -->
+                <form action="#"  name="myemailform">
+                        <input type="hidden" name="recipient" value="tanja120a@gmail.com">
+                        <input type="hidden" name="subject" value="FormMail E-Mail">
+                        
+                    <legend><h2 class="lang" key="type comment">Type comment</h2></legend>                 
+                        <div class="form-div">
+                            <div>
+                                <input class="langAt" key="name" name="name" type="text" placeholder=" Name..." size="30" value="" required><br><br>
+                                <input class="langAt" key = "surname" name="lastname" type="text" size="30" value="" placeholder=" Surname"><br><br>
+                                <input name="email" type="text" placeholder=" E-mail" size="30" value="" required><br><br>
+                                
+                            </div>                            
+                            <div>    
+                                <textarea class="langAt" key="type comment" name="message" placeholder=" Type comment" cols="35" rows="10"></textarea>
+                            </div>
+                        </div>
+                        <div class="form-div-submit">                                
+                            <br>
+                            <button class="lang" key="sent" onclick="hgsubmit();">
+                                Send a comment
+                            </button><br>
+                            <input type="hidden" name="redirect" value="thanks.html">
+                                            
+                        </div>                        
+                </form>
+            </div> 
+            </section>
+            <!--<section class="program">
+              <img alt="program" src="./images/Ram.gif">
+            </section>-->
+            <section class="customer-service">
+              <div class="customer-service-content">
+                <h1 class="lang" key="customer" id="customer-service">Customer service</h1>
+               
+                <p>
+                 <hr/>Sed ut perspiciatis unde omnis iste natus error sit 
+                    voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore 
+                   veritatis >et quasi architecto beatae vitae dicta sunt explicabo.
+                   <br>
+                    Nemo enim ipsam voluptatem quia volupt aspernatur aut odit aut fugit, 
+                    sed quia consequuntur magni dolores eos qui ratione voluptatem 
+                    sequi nesciunt. Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur, 
+                    adipisci velit, sed quia non numquam eius modi tempora incidunt ut labore et dolore magnam 
+                    aliquam quaerat voluptatem. 
+                    <br>
+                    Ut enim ad minima veniam, quis nostrum exercitationem ullam corporis 
+                    suscipit laboriosam, nisi ut aliquid ex ea commodi consequatur?
+                    <br> Quis autem vel eum iure 
+                    reprehenderit qui in ea voluptate velit esse quam nihil molestiae consequatur, vel illum qui 
+                    dolorem eum fugiat quo voluptas nulla pariatur?
+                    <br>
+                    "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut 
+                    labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris 
+                    nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit
+                     esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident,
+                     sunt in culpa qui officia deserunt mollit anim id est laborum.
+                  </p>
+                  <hr/>
+            </div>
+            </section>
+            <section id="location" class="location-section">
+              <div class="section-five">
+                <div class="location-first">
+                      <h1 class="lang" key="contact">Contact</h1>
+                      <p>Tel: 011/111-00-00
+                      <br>
+                      Address: Milutina Milankovica bb 
+                      <br>
+                      Beograd, Novi Beograd
+                      <br>
+                      web: https://tatjama.github.io/e-ticket/
+                      <br>
+                      E-mail: tanja120a@gmail.com
+                      <br>
+                      Working hours: 08:00h - 20:00h 
+                      </p>
+                </div>
+                <div class="location left">
+                  <div class="location-slider">        
+                    <div class="location-slide">
+                    <img src="./images/webp/bgbicikl.webp">
+                    <figcaption class="location-img-caption">Photo by Tatjana Markovic</figcaption>
+                    
+                    </div>
+                    <div class="location-slide">
+                     <img src="./images/webp/bggenex.webp">
+                     <figcaption class="location-img-caption">Photo by Tatjana Markovic</figcaption>
+                   
+                    
+                    </div>
+                    <div class="location-slide">
+                      <img src="./images/webp/bgmost.webp"/>          
+                      <figcaption class="location-img-caption">Photo by Tatjana Markovic</figcaption>
+                   
+                    </div>
+                    <div class="location-slide">
+                     <img src="./images/webp/bgduga.webp">
+                     <figcaption class="location-img-caption">Photo by Tatjana Markovic</figcaption>
+                   
+                    </div>
+                    
+            
+                  </div>
+                  <div class="location-dots">
+                    <span class="location-dot" onclick="currentSlide(-1)"></span>
+                    <span class="location-dot active"  onclick="currentSlide(0)"></span>
+                    <span class="location-dot" onclick="currentSlide(1)"></span>
+                    <span class="location-dot" onclick="currentSlide(2)"></span>
+                  </div>
+  
+
+                </div>
+                <div class="location right">
+                       <!--GOOGLE MAP--> 
+            <div class="footer__google-map">
+              <iframe class="footer-google-map__iframe" 
+              src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2830.4158196749604!2d20.40991671492483!3d44.813092784673195!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x475a6f8819fc7bf7%3A0x390e0dbea5371b27!2z0JHRg9C70LXQstCw0YAg0JzQuNC70YPRgtC40L3QsCDQnNC40LvQsNC90LrQvtCy0LjRm9CwIDEyMCwg0JHQtdC-0LPRgNCw0LQ!5e0!3m2!1ssr!2srs!4v1574669699535!5m2!1ssr!2srs" 
+               frameborder="0" style="border:0;" allowfullscreen="">
+              </iframe>
+
+      </div> 
+
+                </div>
+
+              </div>
+            </section>
+            <footer>
+              <div class="footer-div-first">
+                <div class="logo">
+                    <img src="./images/drama6.jpg">
+                </div>
+                <div class="social">
+                    <a href="#"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20"><path fill="#FFF" d="M18.896 0H1.104C.494 0 0 .494 0 1.104v17.793C0 19.506.494 20 1.104 20h9.58v-7.745H8.076V9.237h2.606V7.01c0-2.583 1.578-3.99 3.883-3.99 1.104 0 2.052.082 2.329.119v2.7h-1.598c-1.254 0-1.496.597-1.496 1.47v1.928h2.989l-.39 3.018h-2.6V20h5.098c.608 0 1.102-.494 1.102-1.104V1.104C20 .494 19.506 0 18.896 0z"/></svg></a>
+                    <a href="#"><svg xmlns="http://www.w3.org/2000/svg" width="21" height="20"><path fill="#FFF" d="M10.333 0c-5.522 0-10 4.478-10 10 0 5.523 4.478 10 10 10 5.523 0 10-4.477 10-10 0-5.522-4.477-10-10-10zm3.701 14.077c-1.752.12-5.653.12-7.402 0C4.735 13.947 4.514 13.018 4.5 10c.014-3.024.237-3.947 2.132-4.077 1.749-.12 5.651-.12 7.402 0 1.898.13 2.118 1.059 2.133 4.077-.015 3.024-.238 3.947-2.133 4.077zM8.667 8.048l4.097 1.949-4.097 1.955V8.048z"/></svg></a>
+                    <a href="#"><svg xmlns="http://www.w3.org/2000/svg" width="21" height="18"><path fill="#FFF" d="M20.667 2.797a8.192 8.192 0 01-2.357.646 4.11 4.11 0 001.804-2.27 8.22 8.22 0 01-2.606.996A4.096 4.096 0 0014.513.873c-2.649 0-4.595 2.472-3.997 5.038a11.648 11.648 0 01-8.457-4.287 4.109 4.109 0 001.27 5.478A4.086 4.086 0 011.47 6.59c-.045 1.901 1.317 3.68 3.29 4.075a4.113 4.113 0 01-1.853.07 4.106 4.106 0 003.834 2.85 8.25 8.25 0 01-6.075 1.7 11.616 11.616 0 006.29 1.843c7.618 0 11.922-6.434 11.662-12.205a8.354 8.354 0 002.048-2.124z"/></svg></a>
+                    <a href="#"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20"><path fill="#FFF" d="M10 0C4.478 0 0 4.477 0 10c0 4.237 2.636 7.855 6.356 9.312-.088-.791-.167-2.005.035-2.868.182-.78 1.172-4.97 1.172-4.97s-.299-.6-.299-1.486c0-1.39.806-2.428 1.81-2.428.852 0 1.264.64 1.264 1.408 0 .858-.545 2.14-.828 3.33-.236.995.5 1.807 1.48 1.807 1.778 0 3.144-1.874 3.144-4.58 0-2.393-1.72-4.068-4.177-4.068-2.845 0-4.515 2.135-4.515 4.34 0 .859.331 1.781.745 2.281a.3.3 0 01.069.288l-.278 1.133c-.044.183-.145.223-.335.134-1.249-.581-2.03-2.407-2.03-3.874 0-3.154 2.292-6.052 6.608-6.052 3.469 0 6.165 2.473 6.165 5.776 0 3.447-2.173 6.22-5.19 6.22-1.013 0-1.965-.525-2.291-1.148l-.623 2.378c-.226.869-.835 1.958-1.244 2.621.937.29 1.931.446 2.962.446 5.522 0 10-4.477 10-10S15.522 0 10 0z"/></svg></a>
+                    <a href="#"><svg xmlns="http://www.w3.org/2000/svg" width="21" height="20"><path fill="#FFF" d="M10.333 1.802c2.67 0 2.987.01 4.042.059 2.71.123 3.976 1.409 4.1 4.099.048 1.054.057 1.37.057 4.04 0 2.672-.01 2.988-.058 4.042-.124 2.687-1.386 3.975-4.099 4.099-1.055.048-1.37.058-4.042.058-2.67 0-2.986-.01-4.04-.058-2.717-.124-3.976-1.416-4.1-4.1-.048-1.054-.058-1.37-.058-4.041 0-2.67.01-2.986.058-4.04.124-2.69 1.387-3.977 4.1-4.1 1.054-.048 1.37-.058 4.04-.058zm0-1.802C7.618 0 7.278.012 6.211.06 2.579.227.56 2.242.394 5.877.345 6.944.334 7.284.334 10s.011 3.057.06 4.123c.166 3.632 2.181 5.65 5.816 5.817 1.068.048 1.408.06 4.123.06 2.716 0 3.057-.012 4.124-.06 3.628-.167 5.651-2.182 5.816-5.817.049-1.066.06-1.407.06-4.123s-.011-3.056-.06-4.122C20.11 2.249 18.093.228 14.458.06 13.39.01 13.049 0 10.333 0zm0 4.865a5.135 5.135 0 100 10.27 5.135 5.135 0 000-10.27zm0 8.468a3.333 3.333 0 110-6.666 3.333 3.333 0 010 6.666zm5.339-9.87a1.2 1.2 0 10-.001 2.4 1.2 1.2 0 000-2.4z"/></svg></a>
+                </div>
+              </div>
+              <div class="footer-menu">
+                <div>
+                  <a class="lang" key="aboutUs" href="#aboutus">About us</a>
+                  <a href="./view/eshop.html">E - shop</a>
+                  <a class="lang" key="premiere" href="#section_three_h1">Premiere</a>
+                  <a href="#">Program</a>
+                </div>
+                <div>
+                  <a class="lang" key="contact" href="#location">Contact</a>  
+                  <a class="lang" key = "terms" href="#terms">Terms</a>  
+                  <a class="lang" key="customer" href="#customer-service">Customer service</a>  
+                </div>
+              </div>
+              <div class="footer-form">
+                <form name="myForm">
+                  <input class="langAt" key="news" type="email" name="emailAddr" placeholder="News in your inbox..." value="">
+                  <button class="lang" key="signUp" onClick="checkEMail()">Sign Up</button>
+                  <br><p id="form-message"></p>
+                </form>                
+                <p id="footer-copy">Copyright 2020 by tanja120a@gmail.com . All Rights Reserved</p>
+              </div>
+            </footer>
+            <div class="image-credit">
+              <h5>I wish to thank you for beautifull images:</h5>
+              <h5>Photo by </h5>
+              <div class="image-credit-spans">                <span>
+                  
+                  <a target="_blank" href="https://unsplash.com/@fatihkilic?utm_source=unsplash&amp;utm_medium=referral&amp;utm_content=creditCopyText">
+                    Fatih Kılıç
+                  on  Unsplash
+                  </a></span>
+                <span>
+                  
+                  <a target="_blank" href="https://unsplash.com/@alanaharris?utm_source=unsplash&amp;utm_medium=referral&amp;utm_content=creditCopyText">
+                    Alana Harris
+                  on  Unsplash</a></span>
+                <span> <a target="_blank" href="https://unsplash.com/@samuelsianipar?utm_source=unsplash&amp;utm_medium=referral&amp;utm_content=creditCopyText">Samuel Sianipar on Unsplash</a></span>
+                <span> <a target="_blank" href="https://unsplash.com/@erikmclean?utm_source=unsplash&amp;utm_medium=referral&amp;utm_content=creditCopyText">Erik Mclean on Unsplash</a></span>
+                <span> <a target="_blank" href="https://unsplash.com/@logicdigital?utm_source=unsplash&amp;utm_medium=referral&amp;utm_content=creditCopyText">
+                  Logic Digital on Unsplash</a></span>
+                <span> <a target="_blank" href="https://unsplash.com/@victoriaquirk?utm_source=unsplash&amp;utm_medium=referral&amp;utm_content=creditCopyText">Victoria Quirk on Unsplash</a></span>
+                <span> <a target="_blank" href="https://unsplash.com/@craigwhitehead?utm_source=unsplash&amp;utm_medium=referral&amp;utm_content=creditCopyText">
+                  Craig Whitehead on Unsplash</a></span>
+                
+                <span><a target="_blank" href="https://unsplash.com/@vadimfomenok?utm_source=unsplash&amp;utm_medium=referral&amp;utm_content=creditCopyText">
+                  Vadim Fomenok on Unsplash</a></span>
+                
+                <span> <a target="_blank" href="https://unsplash.com/@michaelafonso?utm_source=unsplash&amp;utm_medium=referral&amp;utm_content=creditCopyText">
+                  Michael Afonso on Unsplash</a></span>
+                
+                <span> <a target="_blank" href="https://unsplash.com/@timgouw?utm_source=unsplash&amp;utm_medium=referral&amp;utm_content=creditCopyText">
+                  Tim Gouw on Unsplash</a></span>
+                
+                <span><a target="_blank" href="https://unsplash.com/@andybeales?utm_source=unsplash&amp;utm_medium=referral&amp;utm_content=creditCopyText">
+                  Andy Beales on Unsplash</a></span>
+                
+                <span><a target="_blank" href="https://unsplash.com/@sharonmccutcheon?utm_source=unsplash&amp;utm_medium=referral&amp;utm_content=creditCopyText">
+                  Sharon McCutcheon on Unsplash</a></span>
+                
+                <span><a target="_blank" href="https://unsplash.com/@michaeldam?utm_source=unsplash&amp;utm_medium=referral&amp;utm_content=creditCopyText">
+                  Michael Dam on Unsplash</a></span>
+                
+                <span> <a target="_blank" href="https://unsplash.com/@fábioscaletta?utm_source=unsplash&amp;utm_medium=referral&amp;utm_content=creditCopyText">
+                  Fábio Scaletta on Unsplash</a></span>
+                
+                <span><a target="_blank" href="https://unsplash.com/@fotosushi?utm_source=unsplash&amp;utm_medium=referral&amp;utm_content=creditCopyText">
+                  Foto Sushi on Unsplash</a></span>
+                  <span><a target="_blank" href="https://unsplash.com/@cikstefan?utm_source=unsplash&amp;utm_medium=referral&amp;utm_content=creditCopyText">Štefan Štefančík on Unsplash</a></span>
+
+                  <span> <a target="_blank" href="https://unsplash.com/@yiranding?utm_source=unsplash&amp;utm_medium=referral&amp;utm_content=creditCopyText">丁亦然 on Unsplash</a></span>
+
+                </div>
+
+             
+                <h5>Thank you for icons...</h5>
+                <h5></h5>
+                <span><div class="image-credit-spans">
+                   <div>Icons made by<a target="_blank" href="https://www.flaticon.com/authors/freepik" title="Freepik">Freepik</a> from <a target="_blank" href="https://www.flaticon.com/"     title="Flaticon">www.flaticon.com</a></div>
+                  <div>Icons made by <a target="_blank" href="https://www.flaticon.com/authors/vitaly-gorbachev" title="Vitaly Gorbachev">Vitaly Gorbachev</a> from <a target="_blank" href="https://www.flaticon.com/"     title="Flaticon">www.flaticon.com</a></div>
+                  <div>Icons made by <a target="_blank" href="https://www.flaticon.com/authors/smalllikeart" title="smalllikeart">smalllikeart</a> from <a target="_blank" href="https://www.flaticon.com/"     title="Flaticon">www.flaticon.com</a></div>
+                  <div>Icons made by <a target="_blank" href="https://www.flaticon.com/authors/mynamepong" title="mynamepong">mynamepong</a> from <a target="_blank" href="https://www.flaticon.com/"     title="Flaticon">www.flaticon.com</a></div>
+                  <div>Icons made by <a target="_blank" href="https://www.flaticon.com/authors/bqlqn" title="bqlqn">bqlqn</a> from <a target="_blank" href="https://www.flaticon.com/"     title="Flaticon">www.flaticon.com</a></div>
+                  <div>Icons made by <a target="_blank" href="https://www.flaticon.com/authors/surang" title="surang">surang</a> from <a target="_blank" href="https://www.flaticon.com/"     title="Flaticon">www.flaticon.com</a></div>
+                  <div>Icons made by <a target="_blank" href="https://www.flaticon.com/authors/good-ware" title="Good Ware">Good Ware</a> from <a target="_blank" href="https://www.flaticon.com/"     title="Flaticon">www.flaticon.com</a></div>
+                  <div>Icons made by <a target="_blank" href="https://www.flaticon.com/authors/pixel-perfect" title="Pixel perfect">Pixel perfect</a> from <a target="_blank" href="https://www.flaticon.com/"     title="Flaticon">www.flaticon.com</a></div>
+                </div>
+              </span>
+            </div>
+        </div>
+
+    </body>
+    <script rel="text/js" src="./js/multiLanguage.js"></script>
+    <script rel="text/js" src="./js/session.js"></script>
+    <script rel="text/js" src="./js/navigation.js"></script>
+    <script rel="text/js" src="./js/setLocaleStorage.js"></script>
+    <script rel="text/js" src="./js/popup.js"></script>
+    <script rel="text/js" src="./js/logIn_validation.js"></script>
+    <script rel="text/js" src="./js/logIn.js"></script>
+    <script rel="text/js" src="./js/signUp_validation.js"></script>
+    <script rel="text/js" src="./js/signUp.js"></script>
+    <script rel="text/js" src="./js/signout.js"></script>
+    <script rel="text/js" src="./js/index.js"></script>
+</html>
+

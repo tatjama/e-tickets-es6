@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="author" content="Tatjana Markovic, tanja120a@gmail.com">
+    <meta name="description" content="Responsive Shopping card made by using technique 
+    Vanilla JavaScript, HTML, CSS, Sass, jQuery, session storage and local storage. 
+    If you want to try shopping card go to E-shop.
+    Role: 1. Admin - Sign In - username: admin@admin.com, password: admin,
+    Admin have possibility to sell tickets for performances and to make entry for new performances.
+    2. User: If you want to Sing In E-shop , you have tu Sign Up or use default values 
+    - Sign In - username: user@user.com, password: user. User only have possibility to by tickets for 
+    performances.">
+    <meta name="copyright" content="Tatjana Markovic" >
+    <meta name="owner" content="Tatjana Markovic">
+    <meta name="url" content="https://www.tatjama.github.io/e-ticket">
+    <meta name="subject" content="Shopping card for performances, ballet, opera, drama and orchestra"/>
+   
+    <title>Unos</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <link rel="stylesheet" type="text/css" media="screen" href="../style/main.css" />
+    <link rel="stylesheet" type="text/css" media="screen" href="../style//navigationEShop.css"/>
+    <link rel="stylesheet" type="text/css" media="screen" href="../style/entry.css"/>
+    <link rel="icon" href="../images/drama6.jpg" type="image/jpg">
+
+</head>
+
+<body onload="language()">
+    <nav class="flex-row ">
+        <div id="logo">
+            <a href="../index.html">
+                <img class="nav-img-logo" src="../images/drama6.jpg">
+            </a>
+        </div>
+        <div class="nav-bg card" >
+            <a class="langTitle" key="sale"  title="Idite na prodaju..."  href="./sale.html">
+                <i class="fa fa-opencart" >  </i> 
+              Sale </a>
+            <a id="signOut"  href="../index.html" onclick="signOutEshop('entryForm')">Sign Out</a>     
+        </div>
+    </nav>
+
+    <div id="entry-container">
+        <h3> <i class="fa fa-opencart lang" key="receipt" onclick="newForm()" > RECEIPT DOCUMENT </i></h3>      
+         
+
+
+       
+        <!--<form id="pokupi" style="display: none">-->
+        <form id="entryForm">
+            <fieldset>
+                <legend class="lang" key="receipt" >Receipt document</legend>
+
+                <span class="lang" key="title performance"> </span> 
+                <span class="greska langTitle" key="error title" title="Error. Type performance title"></span>
+                <input class="langAt" key="title performance" type="text" placeholder=" Performance title" id="name" onblur="isValidName('name', 0)" onfocus="unos(0)" required>
+                <br> <span class="lang" key="author table">Author:</span>
+                <span class="greska langTitle" key = "error author" title="Error. Type author name."></span>
+                <input class="langAt" key="author" type="text" placeholder=" Author name" id="author" onblur="isValidName('author', 1)" onfocus="unos(1)" required>
+                <br><span class="lang" key="price table"> Price:</span>
+                <span class="greska langTitle" key="error price" title=' Error. Type price.'></span>
+                <input type="number" class="langAt" key="price" placeholder=" Ticket price" id="price" onblur="isValidNumber()" onfocus="unos(2)" required>
+                <br><span class="lang" key="date"> Date:</span>
+                <span class="greska langTitle" key="error date" title="Error. Type date"></span>
+                <input type="date" id="date" name="date" required>
+                <br><span class="lang" key="type table"> Type of performance:</span>
+                <input list="grupa" name="grupa" class="langAt" key="type" id="type" placeholder=" Performance type" required><br>
+                <datalist id="grupa">
+                    <option value="Opera">
+                    <option value="Balet">
+                    <option value="Predstava">
+                    <option value="Filharmonija">
+                </datalist><br>
+                <input type="number" class="langAt" key="quantity" placeholder="Quantity" id="quantity"  readonly required>
+                <button type="button" class="button lang" key="quantity" id="quantity-button" onclick="quantityOfTickets()"> Quantity</button>
+                
+               
+                
+                <br><br><p class="lang" key="scene">Scene:</p>
+                
+                <input type="radio" class="radiobutton" name="rh" id="pozitivna" checked>
+                <label class="lang" key="alternative" for="pozitivna"> Alternative scene:</label>
+                <input type="radio" class="radiobutton" name="rh">
+                <label class="lang" key="main" for="negativna">Main scene:</label>
+                <br>
+                <label class="lang" key="img pick"  for="img">Pick image</label>
+                <input type="file" id="img" name="img" accept="image/*" multiple   onchange="previewImg(event)">
+
+                <img alt="your image" id="outputImg"  width="50px" height="50px">
+                <!--<button type="reset" onclick="takeImg()" class="button" class="fiksni">Novi događaj</button>-->
+                <button type="button" class="button lang" key="submit" onclick="entry()">Submit</button>
+                <button type="reset" class="button lang" key="clear" onclick="clearFields()">Clear</button>
+
+            </fieldset>
+        </form>
+    </div>
+    <div id="entry-message"></div>
+    <script src="../js/entry.js"></script>
+    <script src="../js/multiLanguage.js"></script>
+    <script src="../js/signout.js"></script>
+</body>
+
+</html>

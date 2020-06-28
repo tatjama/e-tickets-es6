@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta name="author" content="Tatjana Markovic, tanja120a@gmail.com">
+        <meta name="description" content="Responsive Shopping card made by using technique 
+        Vanilla JavaScript, HTML, CSS, Sass, jQuery, session storage and local storage. 
+        If you want to try shopping card go to E-shop.
+        Role: 1. Admin - Sign In - username: admin@admin.com, password: admin,
+        Admin have possibility to sell tickets for performances and to make entry for new performances.
+        2. User: If you want to Sing In E-shop , you have tu Sign Up or use default values 
+        - Sign In - username: user@user.com, password: user. User only have possibility to by tickets for 
+        performances.">
+        <meta name="copyright" content="Tatjana Markovic" >
+        <meta name="owner" content="Tatjana Markovic">
+        <meta name="url" content="https://www.tatjama.github.io/e-ticket">
+        <meta name="subject" content="Shopping card for performances, ballet, opera, drama and orchestra"/>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+        <meta http-equiv="X-UA-Compatible" content="ie=edge">
+        <link rel="stylesheet" type="text/css" media="screen" href="../style/main.css" />
+        <link rel="stylesheet" type="text/css" media="screen" href="../style/navigationEShop.css" />
+        <link rel="stylesheet" type="text/css" media="screen" href="../style/eshop.css" />
+        <link rel="icon" href="../images/drama6.jpg" type="image/jpg">
+        <title>E-shop</title>
+
+    </head>
+<!--<body onload="user()" >  -->
+    <body onload="language()"> 
+
+    <div id="eshop-navigation">   
+
+        <!---NAVIGATION-->
+        <nav class="flex-row">
+            <div id="logo">
+                <a href="../index.html">
+                    <img class="nav-img-logo" src="../images/drama6.jpg">
+                </a>
+            </div>
+            <div class="nav-bg" >
+                <a id="signOut"  href="../index.html" onclick="signOutEshop('shops')">Sign Out</a>     
+            </div>
+        </nav>
+        
+        <div id="eshop-container" >
+        </div>
+        <h2 id="eshop-header">E - shop</h2>
+        <div id="eshop-buttons">
+           <button type="button" class="button" id="dugme1">
+               <a class="lang" key="shopping card" href="shoppingCard.html"> 
+                   Shopping card
+                </a>
+            </button>
+            <br>
+            <button type="button" class="button" id="reservation">
+                <a class="lang" key="add" href="#" >
+                     Add to cart
+                </a>
+            </button>
+            <br>            
+        </div>
+    </div> 
+        <div id="eshop-message">            
+        </div>
+        <div class="open-store" id="open-store"></div>
+        <div id="active-store"></div>
+        <!--<script rel="text/js" src="../js/session.js"></script>-->
+        <script rel="text/js" src="../js/multiLanguage.js"></script>
+        <script rel="text/js" src="../js/signout.js"></script>
+        <script rel="text/js" src="../js/eshop.js"></script>
+    </body>
+
+</html>
